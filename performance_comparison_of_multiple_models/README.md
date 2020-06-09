@@ -5,7 +5,7 @@
 - I will use data visualization to compare the average performance measures (time and fit) across the models.
 
 
-**I will also write another function that (in a compact way) perform GridSearch on multiple models**
+**I also wrote another function that (in a compact way) perform GridSearch on multiple models**
 - Create a pipeline that standardize the train data, then optimize and fit the model with GridSearchCV
 - Get a list of "optimized" models 
 - Compare the optimized models and choose the "best" statistical learning approach based on highest AUC score (on the test dataset)
