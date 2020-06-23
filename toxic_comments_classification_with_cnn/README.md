@@ -1,0 +1,4 @@
+# Toxic comments classification with CNN
+- I will perform multi-class classification and multi-label classification with both a small and large dataset using CNN with pre-trained word embeddings.
+- I want to see the effects of pre-trained word embeddings on the predictive performance of CNN models.
+- In addition, in the real world, it is difficult to obtain a large set of labelled dataset for training.  I want to see the performance of CNN models (1D convnet and  a convnet  with settings based on Yoon Kim's work) that are trained with a "realistically small" dataset (that I might encounter in real-life). 
