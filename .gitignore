@@ -38,4 +38,5 @@ Thumbs.db
 
 # Others #
 ####################
-.idea
+*.idea
+*.csv
