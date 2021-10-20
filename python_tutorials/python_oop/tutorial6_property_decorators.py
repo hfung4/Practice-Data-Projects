@@ -1,9 +1,8 @@
 # https://www.youtube.com/watch?v=jCzT9XFZ5bw&t=2s
 
-# We learn how to use the property decorator.
+# The objective of this lesson is to learn how to use the property decorator.
 
 class Employee:
-
     # class variable
     raise_amount = 1.04
 
@@ -24,9 +23,6 @@ print(emp_1.email) # Henry.Fung@gmail.com
 print(emp_1.fullname()) #Henry Fung
 
 
-# instantiate Employee class
-emp_1 = Employee('Henry', 'Fung')
-
 # What if I want to change the first name, can I do it like this?
 emp_1.first = 'Jim'
 
@@ -37,16 +33,19 @@ print(emp_1.fullname())  # Jim Fung
 
 # Two observations:
 # 1) I change the first name to 'Jim' after I init emp_1 with 'Henry' as first name.
-# The full name  is 'updated' since the full name method takes the current(updated) 'first' and 'last' attributes as input arg.
+# The full name is 'updated' since the full name method takes the current(updated) 'first' and 'last' attributes as input arg.
 
-#2) The email is NOT updated since the email attribute is set within the constructor (email attribute is set during initialization)
+#2) The email is NOT updated since the email attribute is set within the constructor (email attribute
+# is set ONLY during initialization)
 
 # Solution: Can we just change the way email is set?
-# Instead of setting email in the constructors,  We define a email method (like full name) that
-# takes current first and last attributes as input args.
+# Instead of setting email in the constructor,  We define a email method (like full name) that
+# takes current first and last attributes as input args. Let's call this method email()
 
 # PROBLEM:  Imagine I have many Employee objects in the code already.  I will need to go to every emp_1.email,
 # emp_2.email, ..., emp_100.email and change it manually to emp_1.email(), emp_2.email()......
+# We would also have the same problem for fullname.  I have to manually use the fullname function to
+# return all the updated fullnames emp1.fullname(), emp2.fullname() etc...
 
 # In Python, we can use 'property decorators' that allow us to define a method that we can access like an attribute with no ()
 
@@ -152,7 +151,7 @@ print(emp_1.email)  # no need () anymore since I add the property decorator on t
 print(emp_1.fullname)  # no need () anymore since I use property decorator
 
 
-## Property Decorators: setters (PROBLEM)
+## Property Decorators: setters (PROBLEM) -----------------------------------------------
 
 class Employee:
 
@@ -178,6 +177,7 @@ emp_1 = Employee('Henry', 'Fung')
 emp_1.first ='Jim'
 emp_1.last ='Wong'
 print(emp_1.fullname) # Jim Wong
+print(emp_1.email) # Jim.Wong@gmail.com
 
 # I want to instead set fullname like this:
 #emp_1.fullname = 'Jim Wong'
@@ -187,6 +187,8 @@ print(emp_1.fullname) # Jim Wong
 
 
 ## Property Decorators: setters (SOLUTION)
+# We use a decorator called setter to make changes to the fullname() method (more precisely,
+# it is a property since it has the @property decorator)
 
 class Employee:
 
@@ -201,7 +203,7 @@ class Employee:
     def email(self):
         return "{}.{}@gmail.com".format(self.first, self.last)
 
-    @property  # property decorator
+    @property  # property decorator  (implementation of the fullname method is same as before)
     def fullname(self):
         return"{} {}".format(self.first, self.last)
 
@@ -241,7 +243,6 @@ print(emp_1.fullname)  # Jim Wong, use property decorators, no need .fullname()
 
 
 ## Property Decorators: deleters
-
 
 class Employee:
 

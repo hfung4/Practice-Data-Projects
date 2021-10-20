@@ -1,7 +1,7 @@
 # https://www.youtube.com/watch?v=BJ-VvGyQxho
 
-# instance variables are variables that are UNIQUE to each instance.
-# For example, first, last, pay, and email are different for each instance.
+# instance variables are attributes that are UNIQUE to each instance.
+# For example, first, last, pay, and email are different for different instances.
 # They are the data for each employee.
 # So far, we used the init function to set instance variables at the time of creation of
 # an instance
@@ -18,7 +18,7 @@
 
 class Employee:
     # Class variables
-    raise_amount = 1.04  # a constant that applies to all instances, no need 'self'
+    raise_amount = 1.04  # a constant that applies to all instances, no need 'self.XXX'
 
     def __init__(self, first, last, pay):
         self.first = first  # 'self.first ='  is same as  'emp1.first ='
@@ -30,6 +30,7 @@ class Employee:
         return "{} {}".format(self.first, self.last)
 
     def apply_raise(self):
+        # This function updates pay by increasing it according to the class variable "raise_amount"
         self.pay = int(
             self.pay * Employee.raise_amount)  # set this as an integer so it will be casted as a whole number
         # I can access a class variable from both the class itself, or from the instances
@@ -123,7 +124,7 @@ print(emp_1.raise_amount)
 print(emp_2.raise_amount)
 print(Employee.raise_amount)
 
-# if I attmept to change raise_amount from instance, I WON"T change the class variable 'raise_amount'.
+# if I attmept to change raise_amount from instance, I WON'T change the class variable 'raise_amount'.
 # Rather, since 'raise_amount" is not an instance variable of emp1, Python will think that the user wants
 # to create a new instance variable called 'raise_amount' for emp_1
 emp_1.raise_amount = 1.01
@@ -163,16 +164,17 @@ print(Employee.raise_amount)
 class Employee:
     # Class variables
     raise_amount = 1.04  # a constant that applies to all instances, no need 'self'
-    num_of_emps = 0  # number of employees, I can updagte this class variablein __init__ everytime a new instance is created
+    num_of_emps = 0  # number of employees, I can update this class variable in __init__ everytime a
+    # new instance is created
 
     def __init__(self, first, last, pay):
         self.first = first  # 'self.first ='  is same as  'emp1.first ='
         self.last = last
         self.pay = pay
         self.email = first + '.' + last + '@company.com'
-
-        # change attribute from the class itself (Employee.num_of_emps), since there is no use case for
-        # us to have different num_of_emps for different employees (unlike raise_amount)
+        # change num_of_emps every time I init a new instance. We use Employee.num_of_emps instead of
+        # self.num_of_emps since there is no use case for us to have different num_of_emps for
+        # different employees (unlike raise_amount)
         Employee.num_of_emps += 1  # increment by 1
 
     def fullname(self):  # take instance as argument, ALWAYS need self as argument

@@ -23,16 +23,21 @@ class Employee:
 
 ## Introduction
 
-# We focus on special methods that we can use within our classes.  Sometimes, these are called magic or dunder methods.
-# Allow us to do "operator overloading" and change built-in behaviour of Python functions:
+# In this section, we focus on special methods that we can use within our classes.  Sometimes, these are
+# called magic or dunder methods.
+# Dunder methods allow us to do "operator overloading" and change built-in behaviour of Python functions:
 print(1+2)  # sum
 print('a'+'b') #concat
 
-# The behaviour of + when we + two string together and when we + two numbers together is different
+# Notice that the behaviour of + when we + two string together and when we + two numbers together is
+# different
 
 emp_1=Employee('Henry', 'Fung', 160000)
 
-# returns an objectXX0532, can we change this 'default behaviour' so that I can print out some useful info about this object?
+# If I print the object, it will return an address <__main__.Employee object at 0x1115191c0>. What if
+# we want to change the behaviour of printing an object?  Instead of returning an address whenever I print an object,
+# I might want to get some more useful information. As we will see, we can use dunder methods to help
+# do that.
 print(emp_1)
 
 # __init__ is called "dunder init".  "Dunder" means surrounding with double underscores.
@@ -69,7 +74,7 @@ class Employee:
         return ("Employee('{}','{}','{}')".format(self.first, self.last, self.pay))
 
     def __str__(self):
-        # More arbitrary, I need to print out something useful and readable.
+        # More arbitrary, I can print out something useful and readable.
         return "{} - {}".format(self.fullname(), self.email)
 
 
@@ -98,9 +103,10 @@ len('Henry') # number of char in string, or the length of the string list
 # In the background
 str.__len__('Henry')
 
+
+
 # I can actually customize how addition works for our objects by creating our own dunder add methods
 # Let's say, if we add the two Employee objects together, we want to compute the sum of the salary of the two Employees.
-
 
 class Employee:
 
@@ -119,8 +125,6 @@ class Employee:
     def apply_raise(self):
         self.pay = int(self.pay * self.raise_amount)
 
-    # need to at least have a repr method, repr method serves as a 'fallback' for str method (if I run str(emp1), Python
-    # will run repr() if str() method does not exist for the Employee class
     def __repr__(self):
         # ROT: I should return a string that I can use to recreate the object
         return ("Employee('{}','{}','{}')".format(self.first, self.last, self.pay))

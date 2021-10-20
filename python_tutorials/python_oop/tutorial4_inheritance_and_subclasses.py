@@ -9,7 +9,7 @@
 # the Employee class.  So we don't need to define a new Developer class by copying a bunch of code from the Employee class.
 # Instead, we can inherit these attributes (and/or methods) from the Employee class.
 
-
+# Employee (base class)
 class Employee:
 
     # class variable
@@ -32,7 +32,7 @@ class Employee:
 
 # for a subclass, we need (), within the () we specify which class we want to inherit from
 class Developer(Employee):
-    pass
+    pass # if we don't have any "modifications" or additional functions, just use "pass"
 
 # Even without any code of its own, the Developer subclass will have all the attributes and methods from the Employee class
 
@@ -65,7 +65,7 @@ print(dev_1.pay)
 dev_1.apply_raise()
 print(dev_1.pay)
 
-# Let's say we want developers to have raise of 10%
+# Let's say we want developers to have raise of 10% instead of 4%
 class Developer(Employee):
     raise_amount=1.10
 
@@ -85,11 +85,12 @@ print(emp_1.pay)  # 4% raise, Employee class is not affected.
 # Suppose when we init the Developer class, we also want to pass in 'programming language' as an attribute
 
 class Developer(Employee):
-    def __init__(self, first, last, pay, prog_lang):
-
+    def __init__(self, first, last, pay, prog_lang): # I need to modify the __init__ function
         # Don't copy and paste code that handles first, last, pay.
+        # For exmaple, don't do this:
+        # self.first = first
         # Instead, let the init method in Employee class to "handle" first, last, pay.
-        # Call parent init method:
+        # We do this by calling the parent class init method:
         super().__init__(first,last,pay)  # super().__init__() is same as Employee.__init__()
         # Employee.__init__(self, first, last, pay)  also works, but not recommended
 
@@ -113,17 +114,22 @@ print(dev_1.prog_lang)
 
 class Manager(Employee):
     def __init__(self, first, last, pay, employees=None):  # by default, the attribute employees is None (empty list)
-        super().__init__(first, last, pay) # let init function from the Employee class to handle first, last, and pay
+        super().__init__(first, last, pay) # let init function from the Employee class to handle
+        # first, last, and pay by calling super().__init__(first, last,pay).  This is same as:
+        # Employee.__init__(first,last,pay)
 
         if employees is None:
-            self.employees = []  # if list of Employees objects is not provided to the class during instantiation
+            self.employees = []  # if list of Employees objects is not provided to the class during
+            # instantiation, init an empty list
         else:
             self.employees = employees
 
 
-    # A new method for the Manager class that adds new employees (Employee object) to employees
+    # Add a new method for the Manager class that adds new employees (Employee object) to the employees
+    # list
     def add_emp(self, emp):  # emp is an Employee object
-        if emp not in self.employees:
+        if emp not in self.employees: # if the emp object does not already exist in the employees list
+            # already, append emp to the employee list
             self.employees.append(emp)
 
     # A new method for the Manager class that removes Employee object from employees
@@ -152,7 +158,7 @@ mgr_1.add_emp(dev_2)
 mgr_1.print_emp()
 
 
-## Useful built-in Python function: isinstance() and issubclass()
+## Useful built-in Python function: isinstance() and issubclass() ------------------------------
 
 # isinstance: tells us if an object is an instance of a class
 print(isinstance(mgr_1,Manager)) # True

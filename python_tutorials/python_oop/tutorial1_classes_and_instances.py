@@ -63,7 +63,9 @@ class Employee:
         self.pay = pay
         self.email = first+'.'+last+'@company.com'
 
-    def fullname(self):  # take instance as argument, ALWAYS need self as argument
+    def fullname(self):  # take instance as argument, ALWAYS need self as argument, even if function
+        # takes in no arg
+        # return a string of the full name of the employee
        return "{} {}".format(self.first, self.last)
 
 
@@ -73,6 +75,10 @@ emp_2=Employee('James', 'Wong', 60000)
 # emp_1 is autonmatically passed to the fullname() method.  So we need to have a self arg to 'catch' that
 print(emp_1.fullname())
 print(emp_2.fullname())
+
+test_full_name = emp_1.fullname()
+print(test_full_name)
+
 
 # run it from the class itself
 print(Employee.fullname(emp_1)) # need to pass instance manually

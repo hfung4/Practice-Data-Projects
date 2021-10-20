@@ -3,10 +3,10 @@
 # We will study three kinds of methods:  1) regular methods, 2) class methods, and 3) static methods.
 
 # Regular methods in a class automatically takes instance as the first arg. So we need "self" when
-# we deifine regular methods in  class to "catch" the instance arg.
+# we define regular methods in a class to "catch" the instance arg.
 # What if we want to change that:  instead we want a method to automatically take a class as the first input arg.
 # In this case, this method is called a "class method".
-# To do this, we need to use a declarator @classmethod, and then define the class method
+# To do this, we need to use a decorator @classmethod, and then define the class method
 
 # Why we want to do that?
 # We want to write a "class method" that changes a class variable raise_amount.
@@ -25,9 +25,6 @@ class Employee:
         self.last = last
         self.pay = pay
         self.email = first + '.' + last + '@company.com'
-
-        # change attribute from the class itself (Employee.num_of_emps), since there is no use case for
-        # us to have different num_of_emps for different employees (unlike raise_amount)
         Employee.num_of_emps += 1  # increment by 1
 
     def fullname(self):  # take instance as argument, ALWAYS need self as argument
@@ -36,7 +33,7 @@ class Employee:
     def apply_raise(self):
         self.pay = int(self.pay * self.raise_amount)  # set this as an integer so it will be casted as a whole number
 
-    # classmethod declarator, this declarator "alters" the functionality of a method: where it will now
+    # classmethod decorator, this decorator "alters" the functionality of a method: where it will now
     # receive class as the first arg instead of the instance.  By convention, we call class arg as "cls"
     @classmethod
     def set_raise_amt(cls,amount):  # in the set_raise_amt method we now work with a class rather than an instance
@@ -73,8 +70,8 @@ str_3='Jane-Doe-90000'
 first, last, pay = str_1.split('-')  # split string by '-'
 new_emp_1 = Employee(first, last, int(pay)) # use the resulting values to init an Employee instance
 
-new_emp_1.pay
-new_emp_1.email
+print(new_emp_1.pay)
+print(new_emp_1.email)
 
 
 # The fast way (create an alternative constructor that allow user to pass in string as input to the constructor)
@@ -90,9 +87,6 @@ class Employee:
         self.last = last
         self.pay = pay
         self.email = first + '.' + last + '@company.com'
-
-        # change attribute from the class itself (Employee.num_of_emps), since there is no use case for
-        # us to have different num_of_emps for different employees (unlike raise_amount)
         Employee.num_of_emps += 1  # increment by 1
 
     def fullname(self):  # take instance as argument, ALWAYS need self as argument
@@ -101,7 +95,7 @@ class Employee:
     def apply_raise(self):
         self.pay = int(self.pay * self.raise_amount)  # set this as an integer so it will be casted as a whole number
 
-    # classmethod declarator, this declarator "alters" the functionality of the method where it will now
+    # classmethod decorator, this decorator "alters" the functionality of the method where it will now
     # receives class as the first arg instead of the instance.  By convention, we call class arg as "cls"
     @classmethod
     def set_raise_amt(cls,amount):  # within the set_raise_amt method, we now work with a class rather than an instance
@@ -111,10 +105,12 @@ class Employee:
     @classmethod
     def from_string(cls,emp_str): # takes in class as first arg, and emp_str as second arg
         first, last, pay = emp_str.split('-')
-        # Create new employee instance
-        # cls(first, last, pay) is equivalent to Employee(first, last, pay)- the way we usually instantiate our class
-        # need to return newly created Employee object so that user can receive the Employee object when from_string() is called
         return cls(first, last, pay)  # create and return Employee object
+    # Create new employee instance
+    # cls(first, last, pay) is equivalent to Employee(first, last, pay)- the way we usually
+    # instantiate our class. For example: emp_1=Employee('Henry', 'Fung', 160000)
+    # need to return newly created Employee object so that user can receive the Employee object when from_string() is called
+
 
 str_1='John-Doe-70000'
 str_2='Steve-Smith-30000'
@@ -123,8 +119,8 @@ str_3='Jane-Doe-90000'
 # create a new Employee object using string inputs by calling the class function 'from_string'
 new_emp_1=Employee.from_string(str_1)   # class methods are ALWAYS called from class
 
-new_emp_1.pay
-new_emp_1.email
+print(new_emp_1.pay)
+print(new_emp_1.email)
 
 
 ## Static methods
@@ -141,10 +137,10 @@ new_emp_1.email
 # Suppose we have a simple function that takes in a day, and returns a boolean that tells me if it is a workday or not.
 # Such a function has a logical to our Employee class, but it doesn't need any Class or Instances variables.
 
-# To create a static method, we use the @staticmethod declarator
+# To create a static method, we use the @staticmethod decorator
 
 # The biggest indicator that a method is 'static' is if the method doesn't access instance or class variable
-# anywhere withn the function.
+# anywhere within the function.
 
 
 class Employee:
@@ -157,9 +153,6 @@ class Employee:
         self.last = last
         self.pay = pay
         self.email = first + '.' + last + '@company.com'
-
-        # change attribute from the class itself (Employee.num_of_emps), since there is no use case for
-        # us to have different num_of_emps for different employees (unlike raise_amount)
         Employee.num_of_emps += 1  # increment by 1
 
     def fullname(self):  # take instance as argument, ALWAYS need self as argument
@@ -185,7 +178,8 @@ class Employee:
 
 
     @staticmethod
-    def is_workday(day):  # no self of cls arg
+    def is_workday(day):  # no self of cls arg, no interaction with any attributes or methods in the
+        # Employee class!
         # sat or sun, use Python build-in function weekday(), assuming that "day" is a Python datetime variable
         if day.weekday() == 5 or day.weekday() == 6:
             return False
